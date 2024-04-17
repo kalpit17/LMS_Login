@@ -1,0 +1,382 @@
+<section class="h-100 p-5">
+  <div class="container h-100">
+    <div
+      class="row d-flex justify-content-center align-items-center h-100 rounded custom-shadow-dark card-registration"
+    >
+      <div class="col">
+        <div class="card-registration my-4">
+          <div class="row g-0">
+            <div
+              class="col-xl-6 d-none d-xl-block justify-content-center align-items-center custom-image"
+              style="padding: 20px; margin: auto"
+            >
+              <img
+                [src]="imageUrl"
+                width="1280"
+                height="1980"
+                alt="Sample photo"
+                class="img-fluid"
+                style="
+                  border-top-left-radius: 0.25rem;
+                  border-bottom-left-radius: 0.25rem;
+                "
+              />
+            </div>
+            <form
+              class="col-xl-6 registration-form"
+              action=""
+              #signupForm="ngForm"
+              (ngSubmit)="onNgFormSubmit()"
+            >
+              <!-- registration form -->
+              <div class="col">
+                <div class="card-body p-md-5 text-black">
+                  <h2 class="mb-5 text-uppercase">Registration Form</h2>
+                  <!-- name place -->
+                  <div class="row">
+                    <div class="col-md-10 mb-4">
+                      <div class="input-group">
+                        <span class="input-group-text">
+                          <span class="fa fa-user"></span>
+                        </span>
+                        <input
+                          type="text"
+                          id="form3Example1m"
+                          class="form-control form-control-lg"
+                          placeholder="Name"
+                          [(ngModel)]="name"
+                          name="name"
+                          #nameInput="ngModel"
+                          required
+                          pattern="[A-Za-z]{2,}"
+                        />
+                      </div>
+                      <div
+                        *ngIf="
+                          nameInput.invalid &&
+                          (nameInput.dirty || nameInput.touched)
+                        "
+                        class="text-danger"
+                      >
+                        <ng-container *ngIf="nameInput.errors?.['required']">
+                          Name is required.
+                        </ng-container>
+                        <ng-container *ngIf="nameInput.errors?.['pattern']">
+                          Name should contain only letters and have a minimum
+                          length of 2 letters.
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- email place -->
+                  <div class="row">
+                    <div class="col-md-10 mb-4">
+                      <div class="input-group">
+                        <span class="input-group-text">
+                          <span class="fa fa-envelope"></span>
+                        </span>
+                        <input
+                          type="email"
+                          id="emailInput"
+                          class="form-control form-control-lg"
+                          placeholder="xyz@example.com"
+                          [(ngModel)]="email"
+                          name="email"
+                          #emailInput="ngModel"
+                          required
+                          email
+                          pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                        />
+                      </div>
+                      <div
+                        *ngIf="
+                          emailInput.invalid &&
+                          (emailInput.dirty || emailInput.touched)
+                        "
+                        class="text-danger"
+                      >
+                        <ng-container *ngIf="emailInput.errors?.['required']">
+                          Email is required.
+                        </ng-container>
+                        <ng-container *ngIf="emailInput.errors?.['email']">
+                          Invalid email format.
+                        </ng-container>
+                        <ng-container *ngIf="emailInput.errors?.['pattern']">
+                          Email is not in the correct format.
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- phone number place -->
+                  <div class="row">
+                    <div class="col-md-10 mb-4">
+                      <div class="input-group">
+                        <span class="input-group-text">
+                          <span class="fa fa-phone" id="phoneIcon"></span>
+                        </span>
+                        <input
+                          type="string"
+                          (input)="onInputChange($event)"
+                          id="phoneInput"
+                          class="form-control form-control-lg"
+                          placeholder="Phone Number"
+                          [(ngModel)]="phoneNumber"
+                          name="phoneNumber"
+                          #phoneInput="ngModel"
+                          required
+                          pattern="[0-9]{10,10}"
+                        />
+                      </div>
+                      <div
+                        *ngIf="
+                          phoneInput.invalid &&
+                          (phoneInput.dirty || phoneInput.touched)
+                        "
+                        class="text-danger"
+                      >
+                        <ng-container *ngIf="phoneInput.errors?.['required']">
+                          Phone number is required.
+                        </ng-container>
+                        <ng-container *ngIf="phoneInput.errors?.['pattern']">
+                          Phone number must contain only numbers and be at least
+                          10 digits long.
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- cutomize image and div change -->
+                  <div class="row">
+                    <form
+                      [formGroup]="registrationForm"
+                      (ngSubmit)="onSubmit()"
+                    >
+                      <div class="col-md-10 mb-3">
+                        <div class="input-group">
+                          <span class="input-group-text">
+                            <span class="fa fa-book"></span>
+                          </span>
+                          <select
+                            class="form-control"
+                            id="role"
+                            formControlName="role"
+                          >
+                            <option
+                              value=""
+                              disabled
+                              selected
+                              aria-placeholder="Select Role"
+                            >
+                              Select Role
+                            </option>
+                            <option value="manager">Manager</option>
+                            <option value="customer">Customer</option>
+                            <option value="driver">Driver</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div
+                        *ngIf="formControls['role'].value === 'manager'"
+                      ></div>
+
+                      <!-- customer area  -->
+                      <div *ngIf="formControls['role'].value === 'customer'">
+                        <div class="row">
+                          <div class="col-md-10 mb-4">
+                            <div class="input-group">
+                              <span class="input-group-text">
+                                <span class="fa fa-house-laptop"></span>
+                              </span>
+                              <input
+                                type="text"
+                                id="addressInput"
+                                class="form-control form-control-lg"
+                                placeholder="Address"
+                                [(ngModel)]="address"
+                                name="address"
+                                #addressInput="ngModel"
+                                required
+                              />
+                            </div>
+                            <div
+                              *ngIf="
+                                addressInput.invalid &&
+                                (addressInput.dirty || addressInput.touched)
+                              "
+                              class="text-danger"
+                            >
+                              Address is required.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- driver area  -->
+                      <div *ngIf="formControls['role'].value === 'driver'">
+                        <div class="row">
+                          <div class="col-md-10 mb-4">
+                            <div class="input-group">
+                              <span class="input-group-text">
+                                <span class="fa fa-address-card"></span>
+                              </span>
+                              <input
+                                type="text"
+                                id="driverLicenseInput"
+                                class="form-control form-control-lg"
+                                placeholder="Driver License"
+                                [(ngModel)]="driverLicense"
+                                name="driverLicense"
+                                #driverLicenseInput="ngModel"
+                                required
+                                minlength="5"
+                              />
+                            </div>
+                            <div
+                              *ngIf="
+                                driverLicenseInput.invalid &&
+                                (driverLicenseInput.dirty ||
+                                  driverLicenseInput.touched)
+                              "
+                              class="text-danger"
+                            >
+                              <ng-container
+                                *ngIf="driverLicenseInput.errors?.['required']"
+                              >
+                                Driver License is required.
+                              </ng-container>
+                              <ng-container
+                                *ngIf="driverLicenseInput.errors?.['minlength']"
+                              >
+                                Driver License must be at least 5 characters
+                                long.
+                              </ng-container>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <!-- plassword place -->
+                  <div class="row">
+                    <div class="col-md-10 mb-4">
+                      <div class="input-group">
+                        <span class="input-group-text">
+                          <span class="fa fa-lock"></span>
+                        </span>
+                        <input
+                          type="password"
+                          id="passwordInput"
+                          class="form-control form-control-lg"
+                          placeholder="Password"
+                          [(ngModel)]="password"
+                          name="password"
+                          #passwordInput="ngModel"
+                          required
+                          minlength="5"
+                          pattern="(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{5,}"
+                        />
+                      </div>
+                      <div
+                        *ngIf="
+                          passwordInput.invalid &&
+                          (passwordInput.dirty || passwordInput.touched)
+                        "
+                        class="text-danger"
+                      >
+                        <ng-container
+                          *ngIf="passwordInput.errors?.['required']"
+                        >
+                          Password is required.
+                        </ng-container>
+                        <ng-container
+                          *ngIf="passwordInput.errors?.['minlength']"
+                        >
+                          Password should contain at least 5 characters.
+                        </ng-container>
+                        <ng-container *ngIf="passwordInput.errors?.['pattern']">
+                          Password should contain at least one uppercase letter,
+                          one lowercase letter, one number, and one special
+                          character.
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- confirm password place -->
+                  <div class="row">
+                    <div class="col-md-10 mb-4">
+                      <div class="input-group">
+                        <span class="input-group-text">
+                          <span class="fa fa-lock"></span>
+                        </span>
+                        <input
+                          type="password"
+                          id="confirmPasswordInput"
+                          class="form-control form-control-lg"
+                          placeholder="Confirm Password"
+                          [(ngModel)]="confirmPassword"
+                          name="confirmPassword"
+                          #confirmPasswordInput="ngModel"
+                          required
+                          [pattern]="password"
+                        />
+                      </div>
+                      <div
+                        *ngIf="
+                          confirmPasswordInput.invalid &&
+                          (confirmPasswordInput.dirty ||
+                            confirmPasswordInput.touched)
+                        "
+                        class="text-danger"
+                      >
+                        <ng-container
+                          *ngIf="confirmPasswordInput.errors?.['required']"
+                        >
+                          Password is required.
+                        </ng-container>
+                        <ng-container
+                          *ngIf="confirmPasswordInput.errors?.['pattern']"
+                        >
+                          Passwords do not match.
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- button   -->
+                  <div class="d-flex justify-content-end pt-3">
+                    <button
+                      type="button"
+                      data-mdb-button-init
+                      data-mdb-ripple-init
+                      class="btn btn-primary btn-lg ms-2"
+                      [routerLink]="['/loginpage']"
+                    >
+                      Back to Login
+                    </button>
+                    <button
+                      type="button"
+                      data-mdb-button-init
+                      data-mdb-ripple-init
+                      class="btn btn-success btn-lg ms-2"
+                      [routerLink]="['/reviewpage']"
+                      [disabled]="!signupForm.valid"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  .custom-shadow-dark {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+</style>
